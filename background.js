@@ -28,6 +28,17 @@ async function setMirrorTabIds(ids) {
   await chrome.storage.session.set({ mirrorTabIds: ids });
 }
 
+// Inject content.js into a tab that was open before the extension loaded.
+// content.js guards against double-injection with window.__mirrortabLoaded.
+async function injectContentScript(tabId) {
+  try {
+    await chrome.scripting.executeScript({ target: { tabId }, files: ['content.js'] });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 // Try sending a message; if no content script is present yet, return false.
 async function trySendMessage(tabId, message) {
   try {
@@ -80,10 +91,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       if (message.type === 'SET_SOURCE') {
         const tabId = sender.tab?.id ?? message.tabId;
         await setSourceTabId(tabId);
-        // Best-effort: content script might not be injected yet on pre-existing tabs.
-        // Failure here must not abort sendResponse — the tab still becomes the source
-        // and onUpdated will re-send BECOME_SOURCE once the page finishes loading.
-        await trySendMessage(tabId, { type: 'BECOME_SOURCE' });
+        // Try to reach the content script. If it isn't there yet (tab was open before
+        // the extension loaded), inject it first, then retry.
+        if (!await trySendMessage(tabId, { type: 'BECOME_SOURCE' })) {
+          await injectContentScript(tabId);
+          await trySendMessage(tabId, { type: 'BECOME_SOURCE' });
+        }
         const tab = await chrome.tabs.get(tabId);
         sendResponse({ ok: true, tab: { id: tab.id, title: tab.title, favIconUrl: tab.favIconUrl } });
       }
@@ -145,6 +158,22 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo) => {
     }
   } catch (err) {
     console.warn('[mirrortab] onUpdated error:', err.message);
+  }
+});
+
+// Inject content.js into all tabs already open at install/reload time.
+// Tabs that loaded after the extension was installed already receive the
+// content script via the manifest declaration — this only handles pre-existing tabs.
+chrome.runtime.onInstalled.addListener(async () => {
+  try {
+    const tabs = await chrome.tabs.query({});
+    await Promise.allSettled(
+      tabs
+        .filter((tab) => !isSkippedUrl(tab.url))
+        .map((tab) => injectContentScript(tab.id))
+    );
+  } catch (err) {
+    console.warn('[mirrortab] onInstalled injection error:', err.message);
   }
 });
 

@@ -1,3 +1,10 @@
+;(function () {
+// Guard: if this tab already has the content script (injected by manifest on page load),
+// a programmatic re-injection via chrome.scripting.executeScript must not add duplicate
+// event listeners. Bail out immediately if we've already initialised.
+if (window.__mirrortabLoaded) return;
+window.__mirrortabLoaded = true;
+
 // ── State ──────────────────────────────────────────────────────────────────
 let isSource = false;
 let isMirror = false;
@@ -161,9 +168,7 @@ function replayEvent(event, payload) {
     if (['click', 'contextmenu', 'mousedown', 'mouseup', 'mousemove'].includes(event)) {
       const clientX = denormX(payload.xPct);
       const clientY = denormY(payload.yPct);
-      const el = event === 'mousemove'
-        ? document.elementFromPoint(clientX, clientY) ?? document.body
-        : document.elementFromPoint(clientX, clientY) ?? document.body;
+      const el = document.elementFromPoint(clientX, clientY) ?? document.body;
       el.dispatchEvent(new MouseEvent(event, {
         clientX,
         clientY,
@@ -256,3 +261,5 @@ chrome.runtime.onMessage.addListener((message) => {
     replayEvent(message.event, message.payload);
   }
 });
+
+})();
