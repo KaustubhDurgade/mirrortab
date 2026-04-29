@@ -109,6 +109,27 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   return true; // keep message channel open for async response
 });
 
+// Re-establish source capture after the source tab navigates to a new URL.
+// Navigation tears down the old content script and injects a fresh one, so
+// isSource resets to false. Sending BECOME_SOURCE again restores capture.
+chrome.tabs.onUpdated.addListener(async (tabId, changeInfo) => {
+  if (changeInfo.status !== 'complete') return;
+  const sourceTabId = await getSourceTabId();
+  if (tabId !== sourceTabId) return;
+
+  try {
+    await chrome.tabs.sendMessage(tabId, { type: 'BECOME_SOURCE' });
+  } catch {
+    // Content script may still be initialising — retry once after a short wait
+    await new Promise((r) => setTimeout(r, 300));
+    try {
+      await chrome.tabs.sendMessage(tabId, { type: 'BECOME_SOURCE' });
+    } catch (err) {
+      console.warn('[mirrortab] Could not re-activate source after navigation:', err.message);
+    }
+  }
+});
+
 chrome.tabs.onRemoved.addListener(async (tabId) => {
   const [sourceTabId, mirrorTabIds] = await Promise.all([
     getSourceTabId(),
