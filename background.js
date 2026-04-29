@@ -28,6 +28,16 @@ async function setMirrorTabIds(ids) {
   await chrome.storage.session.set({ mirrorTabIds: ids });
 }
 
+// Try sending a message; if no content script is present yet, return false.
+async function trySendMessage(tabId, message) {
+  try {
+    await chrome.tabs.sendMessage(tabId, message);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 async function broadcastToMirrors(sourceTabId, message) {
   const [tabs, mirrorTabIds] = await Promise.all([
     chrome.tabs.query({}),
@@ -37,11 +47,7 @@ async function broadcastToMirrors(sourceTabId, message) {
     if (tab.id === sourceTabId) continue;
     if (isSkippedUrl(tab.url)) continue;
     if (mirrorTabIds !== null && !mirrorTabIds.includes(tab.id)) continue;
-    try {
-      await chrome.tabs.sendMessage(tab.id, message);
-    } catch {
-      // Tab may not have content script loaded yet — skip silently
-    }
+    await trySendMessage(tab.id, message);
   }
 }
 
@@ -49,59 +55,62 @@ async function broadcastToAll(message) {
   const tabs = await chrome.tabs.query({});
   for (const tab of tabs) {
     if (isSkippedUrl(tab.url)) continue;
-    try {
-      await chrome.tabs.sendMessage(tab.id, message);
-    } catch {
-      // Skip tabs without content script
-    }
+    await trySendMessage(tab.id, message);
   }
 }
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   const handle = async () => {
-    if (message.type === 'SET_SOURCE') {
-      const tabId = sender.tab?.id ?? message.tabId;
-      await setSourceTabId(tabId);
-      await chrome.tabs.sendMessage(tabId, { type: 'BECOME_SOURCE' });
-      const tab = await chrome.tabs.get(tabId);
-      sendResponse({ ok: true, tab: { id: tab.id, title: tab.title, favIconUrl: tab.favIconUrl } });
-    }
-
-    else if (message.type === 'CLEAR_SOURCE') {
-      await clearSourceTabId();
-      await broadcastToAll({ type: 'SOURCE_CLEARED' });
-      sendResponse({ ok: true });
-    }
-
-    else if (message.type === 'MIRROR_EVENT') {
-      const sourceTabId = await getSourceTabId();
-      if (sourceTabId === null) return;
-      await broadcastToMirrors(sourceTabId, { type: 'MIRROR_EVENT', event: message.event, payload: message.payload });
-      sendResponse({ ok: true });
-    }
-
-    else if (message.type === 'SET_MIRROR_TABS') {
-      // ids: number[] | null — null means mirror all
-      await setMirrorTabIds(message.ids);
-      sendResponse({ ok: true });
-    }
-
-    else if (message.type === 'GET_STATE') {
-      const [sourceTabId, mirrorTabIds] = await Promise.all([
-        getSourceTabId(),
-        getMirrorTabIds(),
-      ]);
-      if (sourceTabId === null) {
-        sendResponse({ sourceTab: null, mirrorTabIds });
-        return;
+    try {
+      if (message.type === 'SET_SOURCE') {
+        const tabId = sender.tab?.id ?? message.tabId;
+        await setSourceTabId(tabId);
+        // Best-effort: content script might not be injected yet on pre-existing tabs.
+        // Failure here must not abort sendResponse — the tab still becomes the source
+        // and onUpdated will re-send BECOME_SOURCE once the page finishes loading.
+        await trySendMessage(tabId, { type: 'BECOME_SOURCE' });
+        const tab = await chrome.tabs.get(tabId);
+        sendResponse({ ok: true, tab: { id: tab.id, title: tab.title, favIconUrl: tab.favIconUrl } });
       }
-      try {
-        const tab = await chrome.tabs.get(sourceTabId);
-        sendResponse({ sourceTab: { id: tab.id, title: tab.title, favIconUrl: tab.favIconUrl }, mirrorTabIds });
-      } catch {
+
+      else if (message.type === 'CLEAR_SOURCE') {
         await clearSourceTabId();
-        sendResponse({ sourceTab: null, mirrorTabIds });
+        await broadcastToAll({ type: 'SOURCE_CLEARED' });
+        sendResponse({ ok: true });
       }
+
+      else if (message.type === 'MIRROR_EVENT') {
+        const sourceTabId = await getSourceTabId();
+        if (sourceTabId === null) return;
+        await broadcastToMirrors(sourceTabId, { type: 'MIRROR_EVENT', event: message.event, payload: message.payload });
+        sendResponse({ ok: true });
+      }
+
+      else if (message.type === 'SET_MIRROR_TABS') {
+        await setMirrorTabIds(message.ids);
+        sendResponse({ ok: true });
+      }
+
+      else if (message.type === 'GET_STATE') {
+        const [sourceTabId, mirrorTabIds] = await Promise.all([
+          getSourceTabId(),
+          getMirrorTabIds(),
+        ]);
+        if (sourceTabId === null) {
+          sendResponse({ sourceTab: null, mirrorTabIds });
+          return;
+        }
+        try {
+          const tab = await chrome.tabs.get(sourceTabId);
+          sendResponse({ sourceTab: { id: tab.id, title: tab.title, favIconUrl: tab.favIconUrl }, mirrorTabIds });
+        } catch {
+          await clearSourceTabId();
+          sendResponse({ sourceTab: null, mirrorTabIds });
+        }
+      }
+    } catch (err) {
+      console.error('[mirrortab] message handler error:', message.type, err);
+      sendResponse({ ok: false, error: err.message });
     }
   };
 
@@ -113,38 +122,43 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 // Navigation tears down the old content script and injects a fresh one, so
 // isSource resets to false. Sending BECOME_SOURCE again restores capture.
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo) => {
+  // Ignore non-completion events cheaply, before any async work.
   if (changeInfo.status !== 'complete') return;
-  const sourceTabId = await getSourceTabId();
-  if (tabId !== sourceTabId) return;
 
   try {
-    await chrome.tabs.sendMessage(tabId, { type: 'BECOME_SOURCE' });
-  } catch {
-    // Content script may still be initialising — retry once after a short wait
-    await new Promise((r) => setTimeout(r, 300));
-    try {
-      await chrome.tabs.sendMessage(tabId, { type: 'BECOME_SOURCE' });
-    } catch (err) {
-      console.warn('[mirrortab] Could not re-activate source after navigation:', err.message);
+    const sourceTabId = await getSourceTabId();
+    if (tabId !== sourceTabId) return;
+
+    const ok = await trySendMessage(tabId, { type: 'BECOME_SOURCE' });
+    if (!ok) {
+      // Content script may still be initialising — retry once after a short wait
+      await new Promise((r) => setTimeout(r, 300));
+      await trySendMessage(tabId, { type: 'BECOME_SOURCE' });
     }
+  } catch (err) {
+    console.warn('[mirrortab] onUpdated error:', err.message);
   }
 });
 
 chrome.tabs.onRemoved.addListener(async (tabId) => {
-  const [sourceTabId, mirrorTabIds] = await Promise.all([
-    getSourceTabId(),
-    getMirrorTabIds(),
-  ]);
+  try {
+    const [sourceTabId, mirrorTabIds] = await Promise.all([
+      getSourceTabId(),
+      getMirrorTabIds(),
+    ]);
 
-  if (tabId === sourceTabId) {
-    await clearSourceTabId();
-    await broadcastToAll({ type: 'SOURCE_CLEARED' });
-    return;
-  }
+    if (tabId === sourceTabId) {
+      await clearSourceTabId();
+      await broadcastToAll({ type: 'SOURCE_CLEARED' });
+      return;
+    }
 
-  // Remove closed tab from the explicit mirror list if present
-  if (mirrorTabIds !== null) {
-    const updated = mirrorTabIds.filter((id) => id !== tabId);
-    await setMirrorTabIds(updated.length ? updated : null);
+    // Remove closed tab from the explicit mirror list if present
+    if (mirrorTabIds !== null) {
+      const updated = mirrorTabIds.filter((id) => id !== tabId);
+      await setMirrorTabIds(updated.length ? updated : null);
+    }
+  } catch (err) {
+    console.warn('[mirrortab] onRemoved error:', err.message);
   }
 });

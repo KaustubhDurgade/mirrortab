@@ -237,6 +237,8 @@ function replayEvent(event, payload) {
 chrome.runtime.onMessage.addListener((message) => {
   if (message.type === 'BECOME_SOURCE') {
     isMirror = false;
+    // Detach first so navigation-triggered re-sends don't stack duplicate listeners
+    if (isSource) detachCaptureListeners();
     isSource = true;
     attachCaptureListeners();
   }
