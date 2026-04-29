@@ -1,5 +1,18 @@
 const SKIPPED_SCHEMES = ['chrome://', 'chrome-extension://', 'about:', 'edge://'];
 
+// ── Macro recording state (in-memory; cleared on service worker restart) ───
+const rec = { active: false, tabId: null, startTime: null, buffer: [] };
+
+// ── Macro storage helpers ──────────────────────────────────────────────────
+async function getMacros() {
+  const result = await chrome.storage.local.get('macros');
+  return result.macros ?? [];
+}
+
+async function saveMacros(macros) {
+  await chrome.storage.local.set({ macros });
+}
+
 function isSkippedUrl(url) {
   if (!url) return true;
   return SKIPPED_SCHEMES.some((scheme) => url.startsWith(scheme));
@@ -83,7 +96,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         console.error('[mirrortab] MIRROR_EVENT broadcast error:', err);
       }
     })();
-    return false; // no async sendResponse needed
+    return false;
+  }
+
+  // RECORD_EVENT is fire-and-forget — accumulate into recording buffer
+  if (message.type === 'RECORD_EVENT') {
+    if (rec.active && sender.tab?.id === rec.tabId) {
+      rec.buffer.push({ t: Date.now() - rec.startTime, event: message.event, payload: message.payload });
+    }
+    return false;
   }
 
   const handle = async () => {
@@ -118,6 +139,71 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
       else if (message.type === 'SET_MIRROR_TABS') {
         await setMirrorTabIds(message.ids);
+        sendResponse({ ok: true });
+      }
+
+      else if (message.type === 'START_RECORDING') {
+        const [activeTab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        if (!activeTab || isSkippedUrl(activeTab.url)) {
+          sendResponse({ ok: false, error: 'No recordable tab active' });
+          return;
+        }
+        rec.active = true;
+        rec.tabId = activeTab.id;
+        rec.startTime = Date.now();
+        rec.buffer = [];
+        if (!await trySendMessage(activeTab.id, { type: 'BECOME_RECORDER' })) {
+          await injectContentScript(activeTab.id);
+          await trySendMessage(activeTab.id, { type: 'BECOME_RECORDER' });
+        }
+        sendResponse({ ok: true, tabId: activeTab.id });
+      }
+
+      else if (message.type === 'STOP_RECORDING') {
+        rec.active = false;
+        await trySendMessage(rec.tabId, { type: 'RECORDING_DONE' });
+        const duration = rec.buffer.at(-1)?.t ?? 0;
+        sendResponse({ ok: true, duration, eventCount: rec.buffer.length });
+      }
+
+      else if (message.type === 'SAVE_MACRO') {
+        const macro = {
+          id: Date.now().toString(),
+          name: message.name || 'Untitled macro',
+          events: rec.buffer,
+          duration: rec.buffer.at(-1)?.t ?? 0,
+          eventCount: rec.buffer.length,
+          recordedAt: Date.now(),
+        };
+        rec.buffer = [];
+        const macros = await getMacros();
+        await saveMacros([macro, ...macros]);
+        sendResponse({ ok: true, macro });
+      }
+
+      else if (message.type === 'GET_MACROS') {
+        const macros = await getMacros();
+        sendResponse({ ok: true, macros });
+      }
+
+      else if (message.type === 'PLAY_MACRO') {
+        const macros = await getMacros();
+        const macro = macros.find((m) => m.id === message.id);
+        if (!macro) { sendResponse({ ok: false, error: 'Macro not found' }); return; }
+        const [activeTab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        if (!activeTab || isSkippedUrl(activeTab.url)) {
+          sendResponse({ ok: false, error: 'No playable tab active' }); return;
+        }
+        if (!await trySendMessage(activeTab.id, { type: 'PLAY_EVENTS', events: macro.events })) {
+          await injectContentScript(activeTab.id);
+          await trySendMessage(activeTab.id, { type: 'PLAY_EVENTS', events: macro.events });
+        }
+        sendResponse({ ok: true });
+      }
+
+      else if (message.type === 'DELETE_MACRO') {
+        const macros = await getMacros();
+        await saveMacros(macros.filter((m) => m.id !== message.id));
         sendResponse({ ok: true });
       }
 

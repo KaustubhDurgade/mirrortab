@@ -8,6 +8,7 @@ window.__mirrortabLoaded = true;
 // ── State ──────────────────────────────────────────────────────────────────
 let isSource = false;
 let isMirror = false;
+let isRecording = false;
 let isReplaying = false; // guard: stop replayed events from re-capturing
 
 // ── Mirror Banner ──────────────────────────────────────────────────────────
@@ -118,7 +119,8 @@ function denormY(yPct) { return yPct * window.innerHeight; }
 
 // ── Send Helper ────────────────────────────────────────────────────────────
 function sendEvent(event, payload) {
-  chrome.runtime.sendMessage({ type: 'MIRROR_EVENT', event, payload }).catch(() => {});
+  if (isSource) chrome.runtime.sendMessage({ type: 'MIRROR_EVENT', event, payload }).catch(() => {});
+  if (isRecording) chrome.runtime.sendMessage({ type: 'RECORD_EVENT', event, payload }).catch(() => {});
 }
 
 // ── Capture Handlers ───────────────────────────────────────────────────────
@@ -324,6 +326,23 @@ chrome.runtime.onMessage.addListener((message) => {
     if (!isMirror) showMirrorBanner();
     isMirror = true;
     replayEvent(message.event, message.payload);
+  }
+
+  else if (message.type === 'BECOME_RECORDER') {
+    if (!isSource) attachCaptureListeners();
+    isRecording = true;
+  }
+
+  else if (message.type === 'RECORDING_DONE') {
+    isRecording = false;
+    if (!isSource) detachCaptureListeners();
+  }
+
+  else if (message.type === 'PLAY_EVENTS') {
+    // t values are absolute ms from recording start — setTimeout recreates exact timing + pauses
+    message.events.forEach(({ t, event, payload }) =>
+      setTimeout(() => replayEvent(event, payload), t)
+    );
   }
 });
 

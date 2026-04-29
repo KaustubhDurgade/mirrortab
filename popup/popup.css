@@ -217,6 +217,45 @@ h1 { font-size: 16px; font-weight: 700; letter-spacing: 0.02em; }
 .toggle-row:hover { color: var(--text); }
 .toggle-row input[type="checkbox"] { accent-color: var(--accent); width: 14px; height: 14px; cursor: pointer; }
 
+/* Macros */
+.macros { margin-bottom: 4px; }
+
+.macro-timer { font-size: 11px; color: var(--accent); font-weight: 700; }
+
+.btn--record {
+  width: 100%; margin-bottom: 8px;
+  background: var(--surface); color: var(--accent);
+  border: 1px solid var(--accent);
+}
+.btn--record:hover { background: rgba(233,69,96,0.1); }
+.btn--record.is-recording { background: rgba(233,69,96,0.15); }
+
+.macro-save-row { display: flex; gap: 6px; margin-bottom: 8px; }
+.macro-name-input {
+  flex: 1; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); color: var(--text); font-size: 12px;
+  padding: 5px 8px; outline: none;
+}
+.macro-name-input:focus { border-color: var(--accent); }
+
+.macro-list { display: flex; flex-direction: column; gap: 3px; max-height: 130px; overflow-y: auto; }
+
+.macro-row {
+  display: flex; align-items: center; gap: 6px;
+  padding: 5px 8px; border-radius: 6px;
+  background: var(--surface); border: 1px solid var(--border);
+}
+.macro-row-name {
+  flex: 1; font-size: 11px; color: var(--text);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.macro-row-meta { font-size: 10px; color: var(--text-muted); flex-shrink: 0; }
+.btn--icon { background: none; border: none; cursor: pointer; padding: 0 2px; font-size: 13px; line-height: 1; }
+.btn--play { color: var(--green); }
+.btn--play:hover { color: #6fcf74; }
+.btn--delete { color: var(--text-muted); }
+.btn--delete:hover { color: var(--accent); }
+
 /* Inject row */
 .inject-row {
   display: flex;

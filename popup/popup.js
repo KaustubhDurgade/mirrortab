@@ -251,5 +251,117 @@ for (const el of Object.values(toggleEls)) {
   el.addEventListener('change', saveToggles);
 }
 
+// ── Macro UI ───────────────────────────────────────────────────────────────
+const btnRecord     = $('btn-record');
+const macroTimer    = $('macro-timer');
+const macroSaveRow  = $('macro-save-row');
+const macroNameInput = $('macro-name');
+const btnSaveMacro  = $('btn-save-macro');
+const macroListEl   = $('macro-list');
+
+let macroRecording = false;
+let timerInterval = null;
+let timerStart = 0;
+
+function formatDuration(ms) {
+  const s = Math.floor(ms / 1000);
+  const m = Math.floor(s / 60);
+  return m > 0 ? `${m}:${String(s % 60).padStart(2, '0')}` : `0:${String(s % 60).padStart(2, '0')}`;
+}
+
+function renderMacros(macros) {
+  if (!macros.length) {
+    macroListEl.innerHTML = '<div class="tab-list-empty">No macros saved</div>';
+    return;
+  }
+  macroListEl.innerHTML = '';
+  for (const macro of macros) {
+    const row = document.createElement('div');
+    row.className = 'macro-row';
+
+    const name = document.createElement('span');
+    name.className = 'macro-row-name';
+    name.textContent = macro.name;
+    name.title = macro.name;
+
+    const meta = document.createElement('span');
+    meta.className = 'macro-row-meta';
+    meta.textContent = formatDuration(macro.duration);
+
+    const btnPlay = document.createElement('button');
+    btnPlay.className = 'btn--icon btn--play';
+    btnPlay.title = 'Play';
+    btnPlay.textContent = '▶';
+    btnPlay.addEventListener('click', async () => {
+      btnPlay.disabled = true;
+      await chrome.runtime.sendMessage({ type: 'PLAY_MACRO', id: macro.id });
+      setTimeout(() => { btnPlay.disabled = false; }, macro.duration + 500);
+    });
+
+    const btnDel = document.createElement('button');
+    btnDel.className = 'btn--icon btn--delete';
+    btnDel.title = 'Delete';
+    btnDel.textContent = '✕';
+    btnDel.addEventListener('click', async () => {
+      await chrome.runtime.sendMessage({ type: 'DELETE_MACRO', id: macro.id });
+      const { macros: updated } = await chrome.runtime.sendMessage({ type: 'GET_MACROS' });
+      renderMacros(updated);
+    });
+
+    row.append(name, meta, btnPlay, btnDel);
+    macroListEl.appendChild(row);
+  }
+}
+
+btnRecord.addEventListener('click', async () => {
+  if (!macroRecording) {
+    const res = await chrome.runtime.sendMessage({ type: 'START_RECORDING' });
+    if (!res?.ok) return;
+    macroRecording = true;
+    timerStart = Date.now();
+    btnRecord.textContent = '■ Stop';
+    btnRecord.classList.add('is-recording');
+    macroSaveRow.classList.add('hidden');
+    macroTimer.classList.remove('hidden');
+    macroTimer.textContent = '0.0s';
+    timerInterval = setInterval(() => {
+      macroTimer.textContent = ((Date.now() - timerStart) / 1000).toFixed(1) + 's';
+    }, 100);
+  } else {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    const res = await chrome.runtime.sendMessage({ type: 'STOP_RECORDING' });
+    macroRecording = false;
+    btnRecord.textContent = '● Record';
+    btnRecord.classList.remove('is-recording');
+    macroTimer.classList.add('hidden');
+    if (res?.ok && res.eventCount > 0) {
+      macroNameInput.value = '';
+      macroSaveRow.classList.remove('hidden');
+      macroNameInput.focus();
+    }
+  }
+});
+
+btnSaveMacro.addEventListener('click', async () => {
+  const name = macroNameInput.value.trim() || 'Untitled macro';
+  const res = await chrome.runtime.sendMessage({ type: 'SAVE_MACRO', name });
+  if (!res?.ok) return;
+  macroSaveRow.classList.add('hidden');
+  const { macros } = await chrome.runtime.sendMessage({ type: 'GET_MACROS' });
+  renderMacros(macros);
+});
+
+macroNameInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') btnSaveMacro.click();
+});
+
+// ── Init ───────────────────────────────────────────────────────────────────
+async function initMacros() {
+  const res = await chrome.runtime.sendMessage({ type: 'GET_MACROS' });
+  renderMacros(res?.macros ?? []);
+}
+
 // ── Start ──────────────────────────────────────────────────────────────────
 init();
+initMacros();

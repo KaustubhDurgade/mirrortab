@@ -72,6 +72,23 @@
     <span id="inject-status" class="inject-status"></span>
   </div>
 
+  <div class="divider"></div>
+
+  <section class="macros">
+    <div class="section-header">
+      <h2 class="section-title">Macros</h2>
+      <span id="macro-timer" class="macro-timer hidden">0.0s</span>
+    </div>
+    <button id="btn-record" class="btn btn--record">● Record</button>
+    <div id="macro-save-row" class="macro-save-row hidden">
+      <input id="macro-name" class="macro-name-input" type="text" placeholder="Name this macro…" maxlength="40" />
+      <button id="btn-save-macro" class="btn btn--ghost">Save</button>
+    </div>
+    <div id="macro-list" class="macro-list">
+      <div class="tab-list-empty">No macros saved</div>
+    </div>
+  </section>
+
   <script src="popup.js"></script>
 </body>
 </html>
