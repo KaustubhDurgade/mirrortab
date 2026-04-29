@@ -43,23 +43,38 @@ async function broadcastToMirrors(sourceTabId, message) {
     chrome.tabs.query({}),
     getMirrorTabIds(),
   ]);
-  for (const tab of tabs) {
-    if (tab.id === sourceTabId) continue;
-    if (isSkippedUrl(tab.url)) continue;
-    if (mirrorTabIds !== null && !mirrorTabIds.includes(tab.id)) continue;
-    await trySendMessage(tab.id, message);
-  }
+  const targets = tabs.filter((tab) => {
+    if (tab.id === sourceTabId) return false;
+    if (isSkippedUrl(tab.url)) return false;
+    if (mirrorTabIds !== null && !mirrorTabIds.includes(tab.id)) return false;
+    return true;
+  });
+  await Promise.allSettled(targets.map((tab) => trySendMessage(tab.id, message)));
 }
 
 async function broadcastToAll(message) {
   const tabs = await chrome.tabs.query({});
-  for (const tab of tabs) {
-    if (isSkippedUrl(tab.url)) continue;
-    await trySendMessage(tab.id, message);
-  }
+  const targets = tabs.filter((tab) => !isSkippedUrl(tab.url));
+  await Promise.allSettled(targets.map((tab) => trySendMessage(tab.id, message)));
 }
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  // MIRROR_EVENT is fire-and-forget from content.js — the message port is
+  // already closed by the time we finish broadcasting. Handle it synchronously
+  // (kick off the async work, return false so the port is released immediately).
+  if (message.type === 'MIRROR_EVENT') {
+    (async () => {
+      try {
+        const sourceTabId = await getSourceTabId();
+        if (sourceTabId === null) return;
+        await broadcastToMirrors(sourceTabId, { type: 'MIRROR_EVENT', event: message.event, payload: message.payload });
+      } catch (err) {
+        console.error('[mirrortab] MIRROR_EVENT broadcast error:', err);
+      }
+    })();
+    return false; // no async sendResponse needed
+  }
+
   const handle = async () => {
     try {
       if (message.type === 'SET_SOURCE') {
@@ -76,13 +91,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       else if (message.type === 'CLEAR_SOURCE') {
         await clearSourceTabId();
         await broadcastToAll({ type: 'SOURCE_CLEARED' });
-        sendResponse({ ok: true });
-      }
-
-      else if (message.type === 'MIRROR_EVENT') {
-        const sourceTabId = await getSourceTabId();
-        if (sourceTabId === null) return;
-        await broadcastToMirrors(sourceTabId, { type: 'MIRROR_EVENT', event: message.event, payload: message.payload });
         sendResponse({ ok: true });
       }
 
@@ -110,7 +118,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       }
     } catch (err) {
       console.error('[mirrortab] message handler error:', message.type, err);
-      sendResponse({ ok: false, error: err.message });
+      try { sendResponse({ ok: false, error: err.message }); } catch {}
     }
   };
 
