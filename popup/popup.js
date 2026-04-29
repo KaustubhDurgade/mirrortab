@@ -6,6 +6,8 @@ const $ = (id) => document.getElementById(id);
 // ── DOM refs ───────────────────────────────────────────────────────────────
 const btnStart      = $('btn-start');
 const btnStop       = $('btn-stop');
+const btnInject     = $('btn-inject');
+const injectStatus  = $('inject-status');
 const statusEl      = $('status');
 const statusText    = $('status-text');
 const sourceInfo    = $('source-info');
@@ -230,6 +232,18 @@ btnStop.addEventListener('click', async () => {
   const allOpenTabs = await chrome.tabs.query({});
   const tabs = eligibleTabs(allOpenTabs, null);
   renderTabList(tabs, currentMirrorTabIds, null);
+});
+
+// ── Inject handler ─────────────────────────────────────────────────────────
+btnInject.addEventListener('click', async () => {
+  btnInject.disabled = true;
+  injectStatus.textContent = 'Injecting…';
+  const res = await chrome.runtime.sendMessage({ type: 'INJECT_ALL' });
+  injectStatus.textContent = res?.ok ? `↑ ${res.injected} tab${res.injected !== 1 ? 's' : ''} reached` : 'Error';
+  setTimeout(() => {
+    btnInject.disabled = false;
+    injectStatus.textContent = '';
+  }, 2500);
 });
 
 // ── Toggle handlers ────────────────────────────────────────────────────────

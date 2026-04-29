@@ -217,5 +217,29 @@ h1 { font-size: 16px; font-weight: 700; letter-spacing: 0.02em; }
 .toggle-row:hover { color: var(--text); }
 .toggle-row input[type="checkbox"] { accent-color: var(--accent); width: 14px; height: 14px; cursor: pointer; }
 
+/* Inject row */
+.inject-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn--ghost {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  font-size: 11px;
+  padding: 5px 10px;
+  flex-shrink: 0;
+}
+.btn--ghost:hover { background: var(--surface); color: var(--text); }
+.btn--ghost:disabled { opacity: 0.5; cursor: default; }
+.inject-status {
+  font-size: 11px;
+  color: var(--green);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Utility */
 .hidden { display: none !important; }

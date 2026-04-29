@@ -10,6 +10,66 @@ let isSource = false;
 let isMirror = false;
 let isReplaying = false; // guard: stop replayed events from re-capturing
 
+// ── Mirror Banner ──────────────────────────────────────────────────────────
+let bannerHost = null;
+let bannerDismissed = false;
+
+function showMirrorBanner() {
+  if (bannerHost || bannerDismissed) return;
+
+  const host = document.createElement('div');
+  host.style.cssText = 'all:initial;position:fixed;top:0;left:0;width:100%;z-index:2147483647;pointer-events:none;';
+  const shadow = host.attachShadow({ mode: 'open' });
+
+  const style = document.createElement('style');
+  style.textContent = `
+    .banner {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      background: rgba(22, 33, 62, 0.93);
+      border-bottom: 1px solid rgba(76,175,80,0.5);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: #4caf50;
+      pointer-events: auto;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #4caf50; box-shadow: 0 0 5px #4caf50;
+      flex-shrink: 0;
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+    .label { flex: 1; }
+    .close {
+      cursor: pointer; color: rgba(136,146,164,0.8);
+      font-size: 15px; line-height: 1; padding: 0 2px;
+    }
+    .close:hover { color: #eaeaea; }
+  `;
+
+  const banner = document.createElement('div');
+  banner.className = 'banner';
+  banner.innerHTML = '<span class="dot"></span><span class="label">Tab Mirror — mirroring active</span><span class="close" title="Dismiss">✕</span>';
+  banner.querySelector('.close').addEventListener('click', () => {
+    bannerDismissed = true;
+    hideMirrorBanner();
+  });
+
+  shadow.append(style, banner);
+  document.documentElement.appendChild(host);
+  bannerHost = host;
+}
+
+function hideMirrorBanner() {
+  if (bannerHost) { bannerHost.remove(); bannerHost = null; }
+}
+
 // ── CSS Path Helper ────────────────────────────────────────────────────────
 function getCssPath(el) {
   if (!el || el === document.body || el === document.documentElement) return 'body';
@@ -242,6 +302,8 @@ function replayEvent(event, payload) {
 chrome.runtime.onMessage.addListener((message) => {
   if (message.type === 'BECOME_SOURCE') {
     isMirror = false;
+    hideMirrorBanner();
+    bannerDismissed = false;
     // Detach first so navigation-triggered re-sends don't stack duplicate listeners
     if (isSource) detachCaptureListeners();
     isSource = true;
@@ -254,9 +316,12 @@ chrome.runtime.onMessage.addListener((message) => {
       detachCaptureListeners();
     }
     isMirror = false;
+    hideMirrorBanner();
+    bannerDismissed = false;
   }
 
   else if (message.type === 'MIRROR_EVENT') {
+    if (!isMirror) showMirrorBanner();
     isMirror = true;
     replayEvent(message.event, message.payload);
   }

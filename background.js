@@ -107,6 +107,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         sendResponse({ ok: true });
       }
 
+      else if (message.type === 'INJECT_ALL') {
+        const tabs = await chrome.tabs.query({});
+        const results = await Promise.allSettled(
+          tabs.filter((t) => !isSkippedUrl(t.url)).map((t) => injectContentScript(t.id))
+        );
+        const injected = results.filter((r) => r.status === 'fulfilled' && r.value).length;
+        sendResponse({ ok: true, injected });
+      }
+
       else if (message.type === 'SET_MIRROR_TABS') {
         await setMirrorTabIds(message.ids);
         sendResponse({ ok: true });
