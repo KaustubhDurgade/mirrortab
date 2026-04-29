@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tab Mirror</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="header">
+    <span class="logo">⬡</span>
+    <h1>Tab Mirror</h1>
+  </div>
+
+  <div id="status" class="status status--idle">
+    <span id="status-dot" class="dot"></span>
+    <span id="status-text">Not mirroring</span>
+  </div>
+
+  <div id="source-info" class="source-info hidden">
+    <img id="source-favicon" src="" alt="" class="favicon" />
+    <span id="source-title" class="source-title"></span>
+  </div>
+
+  <div class="actions">
+    <button id="btn-start" class="btn btn--primary">Start Mirroring</button>
+    <button id="btn-stop" class="btn btn--danger hidden">Stop Mirroring</button>
+  </div>
+
+  <div class="divider"></div>
+
+  <section class="toggles">
+    <h2 class="toggles-title">Mirror events</h2>
+    <label class="toggle-row">
+      <input type="checkbox" id="toggle-mouse" checked />
+      <span>Mouse (click, move, drag)</span>
+    </label>
+    <label class="toggle-row">
+      <input type="checkbox" id="toggle-keyboard" checked />
+      <span>Keyboard</span>
+    </label>
+    <label class="toggle-row">
+      <input type="checkbox" id="toggle-scroll" checked />
+      <span>Scroll</span>
+    </label>
+    <label class="toggle-row">
+      <input type="checkbox" id="toggle-input" checked />
+      <span>Text input</span>
+    </label>
+  </section>
+
+  <script src="popup.js"></script>
+</body>
+</html>
