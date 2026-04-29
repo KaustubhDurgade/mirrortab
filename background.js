@@ -18,11 +18,25 @@ async function clearSourceTabId() {
   await chrome.storage.session.remove('sourceTabId');
 }
 
+// null = mirror all eligible tabs; number[] = only these tab IDs
+async function getMirrorTabIds() {
+  const result = await chrome.storage.session.get('mirrorTabIds');
+  return result.mirrorTabIds ?? null;
+}
+
+async function setMirrorTabIds(ids) {
+  await chrome.storage.session.set({ mirrorTabIds: ids });
+}
+
 async function broadcastToMirrors(sourceTabId, message) {
-  const tabs = await chrome.tabs.query({});
+  const [tabs, mirrorTabIds] = await Promise.all([
+    chrome.tabs.query({}),
+    getMirrorTabIds(),
+  ]);
   for (const tab of tabs) {
     if (tab.id === sourceTabId) continue;
     if (isSkippedUrl(tab.url)) continue;
+    if (mirrorTabIds !== null && !mirrorTabIds.includes(tab.id)) continue;
     try {
       await chrome.tabs.sendMessage(tab.id, message);
     } catch {
@@ -66,18 +80,27 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       sendResponse({ ok: true });
     }
 
+    else if (message.type === 'SET_MIRROR_TABS') {
+      // ids: number[] | null — null means mirror all
+      await setMirrorTabIds(message.ids);
+      sendResponse({ ok: true });
+    }
+
     else if (message.type === 'GET_STATE') {
-      const sourceTabId = await getSourceTabId();
+      const [sourceTabId, mirrorTabIds] = await Promise.all([
+        getSourceTabId(),
+        getMirrorTabIds(),
+      ]);
       if (sourceTabId === null) {
-        sendResponse({ sourceTab: null });
+        sendResponse({ sourceTab: null, mirrorTabIds });
         return;
       }
       try {
         const tab = await chrome.tabs.get(sourceTabId);
-        sendResponse({ sourceTab: { id: tab.id, title: tab.title, favIconUrl: tab.favIconUrl } });
+        sendResponse({ sourceTab: { id: tab.id, title: tab.title, favIconUrl: tab.favIconUrl }, mirrorTabIds });
       } catch {
         await clearSourceTabId();
-        sendResponse({ sourceTab: null });
+        sendResponse({ sourceTab: null, mirrorTabIds });
       }
     }
   };
@@ -87,8 +110,20 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 chrome.tabs.onRemoved.addListener(async (tabId) => {
-  const sourceTabId = await getSourceTabId();
-  if (tabId !== sourceTabId) return;
-  await clearSourceTabId();
-  await broadcastToAll({ type: 'SOURCE_CLEARED' });
+  const [sourceTabId, mirrorTabIds] = await Promise.all([
+    getSourceTabId(),
+    getMirrorTabIds(),
+  ]);
+
+  if (tabId === sourceTabId) {
+    await clearSourceTabId();
+    await broadcastToAll({ type: 'SOURCE_CLEARED' });
+    return;
+  }
+
+  // Remove closed tab from the explicit mirror list if present
+  if (mirrorTabIds !== null) {
+    const updated = mirrorTabIds.filter((id) => id !== tabId);
+    await setMirrorTabIds(updated.length ? updated : null);
+  }
 });
