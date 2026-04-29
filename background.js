@@ -152,6 +152,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         rec.tabId = activeTab.id;
         rec.startTime = Date.now();
         rec.buffer = [];
+        // Persist metadata so the UI survives a service worker restart
+        await chrome.storage.session.set({ recMeta: { active: true, tabId: activeTab.id, startTime: rec.startTime } });
         if (!await trySendMessage(activeTab.id, { type: 'BECOME_RECORDER' })) {
           await injectContentScript(activeTab.id);
           await trySendMessage(activeTab.id, { type: 'BECOME_RECORDER' });
@@ -161,6 +163,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
       else if (message.type === 'STOP_RECORDING') {
         rec.active = false;
+        await chrome.storage.session.remove('recMeta');
         await trySendMessage(rec.tabId, { type: 'RECORDING_DONE' });
         const duration = rec.buffer.at(-1)?.t ?? 0;
         sendResponse({ ok: true, duration, eventCount: rec.buffer.length });
@@ -182,8 +185,19 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       }
 
       else if (message.type === 'GET_MACROS') {
+        // If the service worker restarted (rec reset to defaults), restore metadata
+        // from session storage so the popup shows the correct recording state.
+        if (!rec.active) {
+          const { recMeta } = await chrome.storage.session.get('recMeta');
+          if (recMeta?.active) {
+            rec.active = recMeta.active;
+            rec.tabId = recMeta.tabId;
+            rec.startTime = recMeta.startTime;
+            // buffer is gone after restart — events recorded before the restart are lost,
+            // but at least the popup correctly shows ■ Stop and the timer keeps running.
+          }
+        }
         const macros = await getMacros();
-        // Include live recording state so the popup can restore its UI after being reopened
         const recording = rec.active ? { startTime: rec.startTime } : null;
         sendResponse({ ok: true, macros, recording });
       }
