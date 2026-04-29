@@ -360,6 +360,21 @@ macroNameInput.addEventListener('keydown', (e) => {
 async function initMacros() {
   const res = await chrome.runtime.sendMessage({ type: 'GET_MACROS' });
   renderMacros(res?.macros ?? []);
+
+  // Popup is destroyed and recreated on every open — restore recording UI if
+  // the background was still recording when the popup was last closed.
+  if (res?.recording) {
+    macroRecording = true;
+    timerStart = res.recording.startTime;
+    btnRecord.textContent = '■ Stop';
+    btnRecord.classList.add('is-recording');
+    macroSaveRow.classList.add('hidden');
+    macroTimer.classList.remove('hidden');
+    macroTimer.textContent = ((Date.now() - timerStart) / 1000).toFixed(1) + 's';
+    timerInterval = setInterval(() => {
+      macroTimer.textContent = ((Date.now() - timerStart) / 1000).toFixed(1) + 's';
+    }, 100);
+  }
 }
 
 // ── Start ──────────────────────────────────────────────────────────────────

@@ -183,7 +183,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
       else if (message.type === 'GET_MACROS') {
         const macros = await getMacros();
-        sendResponse({ ok: true, macros });
+        // Include live recording state so the popup can restore its UI after being reopened
+        const recording = rec.active ? { startTime: rec.startTime } : null;
+        sendResponse({ ok: true, macros, recording });
       }
 
       else if (message.type === 'PLAY_MACRO') {
