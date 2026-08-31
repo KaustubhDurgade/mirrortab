@@ -1,6 +1,12 @@
-# Tab Mirror
+# mirrortab
 
 A Chrome extension (MV3) that mirrors every user interaction from one tab to any number of other tabs in real time — no server required, fully browser-local.
+
+> **Screenshot/GIF goes here.** Record one window, four tabs, typing in the leftmost and appearing in all the others.
+
+## Why
+
+> **TODO (Kaustubh):** one or two sentences on the actual problem that made you build this. Replace this block; don't ship my guess.
 
 ## What it mirrors
 
@@ -17,11 +23,11 @@ A Chrome extension (MV3) that mirrors every user interaction from one tab to any
 2. Open `chrome://extensions` (or `comet://extensions`, `edge://extensions`, etc.)
 3. Enable **Developer mode**
 4. Click **Load unpacked** and select this folder
-5. The Tab Mirror icon appears in your toolbar
+5. The mirrortab icon appears in your toolbar
 
 ## Usage
 
-1. Click the **Tab Mirror** toolbar icon while on the tab you want to use as the source
+1. Click the **mirrortab** toolbar icon while on the tab you want to use as the source
 2. Click **Start Mirroring** — that tab is now the source
 3. Switch to any other open tab — it's now a mirror (a green banner appears at the top)
 4. Anything you do on the source tab is replayed on all mirror tabs
