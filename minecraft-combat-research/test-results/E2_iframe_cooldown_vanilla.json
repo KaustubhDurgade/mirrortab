@@ -1,0 +1,358 @@
+[
+ {
+  "server": "vanilla",
+  "plan": "noGhost",
+  "rep": 0,
+  "clicks": [
+   0,
+   13
+  ],
+  "drops": [
+   [
+    1,
+    7
+   ],
+   [
+    14,
+    7
+   ]
+  ],
+  "final": 1012
+ },
+ {
+  "server": "vanilla",
+  "plan": "noGhost",
+  "rep": 1,
+  "clicks": [
+   0,
+   13
+  ],
+  "drops": [
+   [
+    1,
+    7
+   ],
+   [
+    14,
+    7
+   ]
+  ],
+  "final": 1012
+ },
+ {
+  "server": "vanilla",
+  "plan": "noGhost",
+  "rep": 2,
+  "clicks": [
+   0,
+   13
+  ],
+  "drops": [
+   [
+    2,
+    7
+   ],
+   [
+    14,
+    7
+   ]
+  ],
+  "final": 1012
+ },
+ {
+  "server": "vanilla",
+  "plan": "noGhost",
+  "rep": 3,
+  "clicks": [
+   0,
+   13
+  ],
+  "drops": [
+   [
+    1,
+    7
+   ],
+   [
+    14,
+    7
+   ]
+  ],
+  "final": 1012
+ },
+ {
+  "server": "vanilla",
+  "plan": "ghostAt5",
+  "rep": 0,
+  "clicks": [
+   0,
+   5,
+   13
+  ],
+  "drops": [
+   [
+    1,
+    7
+   ],
+   [
+    14,
+    3.9894
+   ]
+  ],
+  "final": 1015.0105590820312
+ },
+ {
+  "server": "vanilla",
+  "plan": "ghostAt5",
+  "rep": 1,
+  "clicks": [
+   0,
+   5,
+   13
+  ],
+  "drops": [
+   [
+    1,
+    7
+   ],
+   [
+    14,
+    3.9894
+   ]
+  ],
+  "final": 1015.0105590820312
+ },
+ {
+  "server": "vanilla",
+  "plan": "ghostAt5",
+  "rep": 2,
+  "clicks": [
+   0,
+   5,
+   13
+  ],
+  "drops": [
+   [
+    1,
+    7
+   ],
+   [
+    14,
+    3.9894
+   ]
+  ],
+  "final": 1015.0105590820312
+ },
+ {
+  "server": "vanilla",
+  "plan": "ghostAt5",
+  "rep": 3,
+  "clicks": [
+   0,
+   5,
+   13
+  ],
+  "drops": [
+   [
+    2,
+    7
+   ],
+   [
+    15,
+    3.9894
+   ]
+  ],
+  "final": 1015.0105590820312
+ },
+ {
+  "server": "vanilla",
+  "plan": "ghostAt3and7",
+  "rep": 0,
+  "clicks": [
+   0,
+   3,
+   7,
+   13
+  ],
+  "drops": [
+   [
+    1,
+    7
+   ],
+   [
+    14,
+    2.9142
+   ]
+  ],
+  "final": 1016.0857543945312
+ },
+ {
+  "server": "vanilla",
+  "plan": "ghostAt3and7",
+  "rep": 1,
+  "clicks": [
+   0,
+   3,
+   7,
+   13
+  ],
+  "drops": [
+   [
+    1,
+    7
+   ],
+   [
+    14,
+    2.9142
+   ]
+  ],
+  "final": 1016.0857543945312
+ },
+ {
+  "server": "vanilla",
+  "plan": "ghostAt3and7",
+  "rep": 2,
+  "clicks": [
+   0,
+   3,
+   7,
+   13
+  ],
+  "drops": [
+   [
+    1,
+    7
+   ],
+   [
+    14,
+    2.9142
+   ]
+  ],
+  "final": 1016.0857543945312
+ },
+ {
+  "server": "vanilla",
+  "plan": "ghostAt3and7",
+  "rep": 3,
+  "clicks": [
+   0,
+   3,
+   7,
+   13
+  ],
+  "drops": [
+   [
+    1,
+    7
+   ],
+   [
+    14,
+    2.9142
+   ]
+  ],
+  "final": 1016.0857543945312
+ },
+ {
+  "server": "vanilla",
+  "plan": "spam_every2",
+  "rep": 0,
+  "clicks": [
+   0,
+   2,
+   4,
+   6,
+   8,
+   10,
+   12,
+   14
+  ],
+  "drops": [
+   [
+    1,
+    7
+   ],
+   [
+    11,
+    1.624
+   ]
+  ],
+  "final": 1017.3759765625
+ },
+ {
+  "server": "vanilla",
+  "plan": "spam_every2",
+  "rep": 1,
+  "clicks": [
+   0,
+   2,
+   4,
+   6,
+   8,
+   10,
+   12,
+   14
+  ],
+  "drops": [
+   [
+    2,
+    7
+   ],
+   [
+    12,
+    1.624
+   ]
+  ],
+  "final": 1017.3759765625
+ },
+ {
+  "server": "vanilla",
+  "plan": "spam_every2",
+  "rep": 2,
+  "clicks": [
+   0,
+   2,
+   4,
+   6,
+   8,
+   10,
+   12,
+   14
+  ],
+  "drops": [
+   [
+    1,
+    7
+   ],
+   [
+    11,
+    1.624
+   ]
+  ],
+  "final": 1017.3759765625
+ },
+ {
+  "server": "vanilla",
+  "plan": "spam_every2",
+  "rep": 3,
+  "clicks": [
+   0,
+   2,
+   4,
+   6,
+   8,
+   10,
+   12,
+   14
+  ],
+  "drops": [
+   [
+    1,
+    7
+   ],
+   [
+    11,
+    1.624
+   ]
+  ],
+  "final": 1017.3759765625
+ }
+]

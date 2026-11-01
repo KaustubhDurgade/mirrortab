@@ -1,0 +1,74 @@
+[
+ {
+  "server": "vanilla",
+  "sprint": false,
+  "rep": 0,
+  "velocityPackets": [],
+  "teleports": [],
+  "T0": {
+   "x": 0.5,
+   "y": -60,
+   "z": 3.25
+  }
+ },
+ {
+  "server": "vanilla",
+  "sprint": false,
+  "rep": 1,
+  "velocityPackets": [],
+  "teleports": [],
+  "T0": {
+   "x": 0.5,
+   "y": -60,
+   "z": 3.25
+  }
+ },
+ {
+  "server": "vanilla",
+  "sprint": false,
+  "rep": 2,
+  "velocityPackets": [],
+  "teleports": [],
+  "T0": {
+   "x": 0.5,
+   "y": -60,
+   "z": 3.25
+  }
+ },
+ {
+  "server": "vanilla",
+  "sprint": true,
+  "rep": 0,
+  "velocityPackets": [],
+  "teleports": [],
+  "T0": {
+   "x": 0.5,
+   "y": -60,
+   "z": 3.25
+  }
+ },
+ {
+  "server": "vanilla",
+  "sprint": true,
+  "rep": 1,
+  "velocityPackets": [],
+  "teleports": [],
+  "T0": {
+   "x": 0.5,
+   "y": -60,
+   "z": 3.25
+  }
+ },
+ {
+  "server": "vanilla",
+  "sprint": true,
+  "rep": 2,
+  "velocityPackets": [],
+  "teleports": [],
+  "T0": {
+   "x": 0.5,
+   "y": -60,
+   "z": 3.25
+  }
+ }
+]

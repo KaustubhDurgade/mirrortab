@@ -1,0 +1,107 @@
+[
+ {
+  "server": "paper",
+  "mode": "normal_spacing",
+  "rep": 0,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "paper",
+  "mode": "normal_spacing",
+  "rep": 1,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "paper",
+  "mode": "normal_spacing",
+  "rep": 2,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "paper",
+  "mode": "normal_spacing",
+  "rep": 3,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "paper",
+  "mode": "normal_spacing",
+  "rep": 4,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "paper",
+  "mode": "bunched_prev_tick",
+  "rep": 0,
+  "dmg": 10.5,
+  "crit": true
+ },
+ {
+  "server": "paper",
+  "mode": "bunched_prev_tick",
+  "rep": 1,
+  "dmg": 10.5,
+  "crit": true
+ },
+ {
+  "server": "paper",
+  "mode": "bunched_prev_tick",
+  "rep": 2,
+  "dmg": 10.5,
+  "crit": true
+ },
+ {
+  "server": "paper",
+  "mode": "bunched_prev_tick",
+  "rep": 3,
+  "dmg": 10.5,
+  "crit": true
+ },
+ {
+  "server": "paper",
+  "mode": "bunched_prev_tick",
+  "rep": 4,
+  "dmg": 10.5,
+  "crit": true
+ },
+ {
+  "server": "paper",
+  "mode": "no_web_falling_normal",
+  "rep": 0,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "paper",
+  "mode": "no_web_falling_normal",
+  "rep": 1,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "paper",
+  "mode": "no_web_falling_normal",
+  "rep": 2,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "paper",
+  "mode": "no_web_falling_normal",
+  "rep": 3,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "paper",
+  "mode": "no_web_falling_normal",
+  "rep": 4,
+  "dmg": 7,
+  "crit": false
+ }
+]

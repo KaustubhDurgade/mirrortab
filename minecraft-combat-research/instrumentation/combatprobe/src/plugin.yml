@@ -1,0 +1,9 @@
+name: CombatProbe
+version: 1.0
+main: research.combatprobe.CombatProbe
+api-version: '1.21.11'
+description: Passive combat-state logger (observes only; never modifies events)
+commands:
+  probe:
+    description: probe mark <label> | probe flush
+    permission: combatprobe.use

@@ -1,0 +1,266 @@
+[
+ {
+  "server": "vanilla",
+  "k": 1,
+  "rep": 0,
+  "yBeforeAttack": 0.42,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "vanilla",
+  "k": 1,
+  "rep": 1,
+  "yBeforeAttack": 0.42,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "vanilla",
+  "k": 1,
+  "rep": 2,
+  "yBeforeAttack": 0.42,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "vanilla",
+  "k": 2,
+  "rep": 0,
+  "yBeforeAttack": 0.7531999999999999,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "vanilla",
+  "k": 2,
+  "rep": 1,
+  "yBeforeAttack": 0.7531999999999999,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "vanilla",
+  "k": 2,
+  "rep": 2,
+  "yBeforeAttack": 0.7531999999999999,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "vanilla",
+  "k": 3,
+  "rep": 0,
+  "yBeforeAttack": 1.0013359999999998,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "vanilla",
+  "k": 3,
+  "rep": 1,
+  "yBeforeAttack": 1.0013359999999998,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "vanilla",
+  "k": 3,
+  "rep": 2,
+  "yBeforeAttack": 1.0013359999999998,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "vanilla",
+  "k": 4,
+  "rep": 0,
+  "yBeforeAttack": 1.1661092799999997,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "vanilla",
+  "k": 4,
+  "rep": 1,
+  "yBeforeAttack": 1.1661092799999997,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "vanilla",
+  "k": 4,
+  "rep": 2,
+  "yBeforeAttack": 1.1661092799999997,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "vanilla",
+  "k": 5,
+  "rep": 0,
+  "yBeforeAttack": 1.2491870943999996,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "vanilla",
+  "k": 5,
+  "rep": 1,
+  "yBeforeAttack": 1.2491870943999996,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "vanilla",
+  "k": 5,
+  "rep": 2,
+  "yBeforeAttack": 1.2491870943999996,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "vanilla",
+  "k": 6,
+  "rep": 0,
+  "yBeforeAttack": 1.2522033525119995,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "vanilla",
+  "k": 6,
+  "rep": 1,
+  "yBeforeAttack": 1.2522033525119995,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "vanilla",
+  "k": 6,
+  "rep": 2,
+  "yBeforeAttack": 1.2522033525119995,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "vanilla",
+  "k": 7,
+  "rep": 0,
+  "yBeforeAttack": 1.1767592854617595,
+  "dmg": 10.5,
+  "crit": true
+ },
+ {
+  "server": "vanilla",
+  "k": 7,
+  "rep": 1,
+  "yBeforeAttack": 1.1767592854617595,
+  "dmg": 10.5,
+  "crit": true
+ },
+ {
+  "server": "vanilla",
+  "k": 7,
+  "rep": 2,
+  "yBeforeAttack": 1.1767592854617595,
+  "dmg": 10.5,
+  "crit": true
+ },
+ {
+  "server": "vanilla",
+  "k": 8,
+  "rep": 0,
+  "yBeforeAttack": 1.0244240997525242,
+  "dmg": 10.5,
+  "crit": true
+ },
+ {
+  "server": "vanilla",
+  "k": 8,
+  "rep": 1,
+  "yBeforeAttack": 1.0244240997525242,
+  "dmg": 10.5,
+  "crit": true
+ },
+ {
+  "server": "vanilla",
+  "k": 8,
+  "rep": 2,
+  "yBeforeAttack": 1.0244240997525242,
+  "dmg": 10.5,
+  "crit": true
+ },
+ {
+  "server": "vanilla",
+  "k": 9,
+  "rep": 0,
+  "yBeforeAttack": 0.7967356177574737,
+  "dmg": 10.5,
+  "crit": true
+ },
+ {
+  "server": "vanilla",
+  "k": 9,
+  "rep": 1,
+  "yBeforeAttack": 0.7967356177574737,
+  "dmg": 10.5,
+  "crit": true
+ },
+ {
+  "server": "vanilla",
+  "k": 9,
+  "rep": 2,
+  "yBeforeAttack": 0.7967356177574737,
+  "dmg": 10.5,
+  "crit": true
+ },
+ {
+  "server": "vanilla",
+  "k": 10,
+  "rep": 0,
+  "yBeforeAttack": 0.49520090540232414,
+  "dmg": 10.5,
+  "crit": true
+ },
+ {
+  "server": "vanilla",
+  "k": 10,
+  "rep": 1,
+  "yBeforeAttack": 0.49520090540232414,
+  "dmg": 10.5,
+  "crit": true
+ },
+ {
+  "server": "vanilla",
+  "k": 10,
+  "rep": 2,
+  "yBeforeAttack": 0.49520090540232414,
+  "dmg": 10.5,
+  "crit": true
+ },
+ {
+  "server": "vanilla",
+  "k": 11,
+  "rep": 0,
+  "yBeforeAttack": 0.12129688729427757,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "vanilla",
+  "k": 11,
+  "rep": 1,
+  "yBeforeAttack": 0.12129688729427757,
+  "dmg": 7,
+  "crit": false
+ },
+ {
+  "server": "vanilla",
+  "k": 11,
+  "rep": 2,
+  "yBeforeAttack": 0.12129688729427757,
+  "dmg": 7,
+  "crit": false
+ }
+]

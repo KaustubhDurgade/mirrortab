@@ -1,0 +1,248 @@
+[
+ {
+  "server": "paper",
+  "plan": "sword_baseline",
+  "rep": 0,
+  "dmg": 7,
+  "kb": [
+   0,
+   0.3608,
+   0.4
+  ],
+  "shieldCd": []
+ },
+ {
+  "server": "paper",
+  "plan": "sword_baseline",
+  "rep": 1,
+  "dmg": 7,
+  "kb": [
+   0,
+   0.3608,
+   0.4
+  ],
+  "shieldCd": []
+ },
+ {
+  "server": "paper",
+  "plan": "sword_baseline",
+  "rep": 2,
+  "dmg": 7,
+  "kb": [
+   0,
+   0.3608,
+   0.4
+  ],
+  "shieldCd": []
+ },
+ {
+  "server": "paper",
+  "plan": "axe_baseline",
+  "rep": 0,
+  "dmg": 9,
+  "kb": [
+   0,
+   0.3608,
+   0.4
+  ],
+  "shieldCd": []
+ },
+ {
+  "server": "paper",
+  "plan": "axe_baseline",
+  "rep": 1,
+  "dmg": 9,
+  "kb": [
+   0,
+   0.3608,
+   0.4
+  ],
+  "shieldCd": []
+ },
+ {
+  "server": "paper",
+  "plan": "axe_baseline",
+  "rep": 2,
+  "dmg": 9,
+  "kb": [
+   0,
+   0.3608,
+   0.4
+  ],
+  "shieldCd": []
+ },
+ {
+  "server": "paper",
+  "plan": "sword_to_axe_sametick",
+  "rep": 0,
+  "dmg": 1.8045,
+  "kb": [
+   0,
+   0.3608,
+   0.4
+  ],
+  "shieldCd": []
+ },
+ {
+  "server": "paper",
+  "plan": "sword_to_axe_sametick",
+  "rep": 1,
+  "dmg": 1.8045,
+  "kb": [
+   0,
+   0.3608,
+   0.4
+  ],
+  "shieldCd": []
+ },
+ {
+  "server": "paper",
+  "plan": "sword_to_axe_sametick",
+  "rep": 2,
+  "dmg": 1.8045,
+  "kb": [
+   0,
+   0.3608,
+   0.4
+  ],
+  "shieldCd": []
+ },
+ {
+  "server": "paper",
+  "plan": "axe_to_sword_sametick",
+  "rep": 0,
+  "dmg": 1.4089,
+  "kb": [
+   0,
+   0.3608,
+   0.4
+  ],
+  "shieldCd": []
+ },
+ {
+  "server": "paper",
+  "plan": "axe_to_sword_sametick",
+  "rep": 1,
+  "dmg": 1.4089,
+  "kb": [
+   0,
+   0.3608,
+   0.4
+  ],
+  "shieldCd": []
+ },
+ {
+  "server": "paper",
+  "plan": "axe_to_sword_sametick",
+  "rep": 2,
+  "dmg": 1.4089,
+  "kb": [
+   0,
+   0.3608,
+   0.4
+  ],
+  "shieldCd": []
+ },
+ {
+  "server": "paper",
+  "plan": "sword_to_axe_prevtick",
+  "rep": 0,
+  "dmg": 1.8045,
+  "kb": [
+   0,
+   0.3608,
+   0.4
+  ],
+  "shieldCd": []
+ },
+ {
+  "server": "paper",
+  "plan": "sword_to_axe_prevtick",
+  "rep": 1,
+  "dmg": 1.8045,
+  "kb": [
+   0,
+   0.3608,
+   0.4
+  ],
+  "shieldCd": []
+ },
+ {
+  "server": "paper",
+  "plan": "sword_to_axe_prevtick",
+  "rep": 2,
+  "dmg": 1.8045,
+  "kb": [
+   0,
+   0.3608,
+   0.4
+  ],
+  "shieldCd": []
+ },
+ {
+  "server": "paper",
+  "plan": "shield_sword_baseline",
+  "rep": 0,
+  "dmg": 0,
+  "kb": null,
+  "shieldCd": []
+ },
+ {
+  "server": "paper",
+  "plan": "shield_sword_baseline",
+  "rep": 1,
+  "dmg": 0,
+  "kb": null,
+  "shieldCd": []
+ },
+ {
+  "server": "paper",
+  "plan": "shield_sword_baseline",
+  "rep": 2,
+  "dmg": 0,
+  "kb": null,
+  "shieldCd": []
+ },
+ {
+  "server": "paper",
+  "plan": "shield_sword_to_axe_sametick",
+  "rep": 0,
+  "dmg": 0,
+  "kb": null,
+  "shieldCd": [
+   {
+    "cooldownGroup": "minecraft:shield",
+    "cooldownTicks": 100
+   }
+  ]
+ },
+ {
+  "server": "paper",
+  "plan": "shield_sword_to_axe_sametick",
+  "rep": 1,
+  "dmg": 1.8045,
+  "kb": [
+   0,
+   0.3608,
+   0.4
+  ],
+  "shieldCd": []
+ },
+ {
+  "server": "paper",
+  "plan": "shield_sword_to_axe_sametick",
+  "rep": 2,
+  "dmg": 1.8045,
+  "kb": [
+   0,
+   0.3608,
+   0.4
+  ],
+  "shieldCd": [
+   {
+    "cooldownGroup": "minecraft:shield",
+    "cooldownTicks": 0
+   }
+  ]
+ }
+]

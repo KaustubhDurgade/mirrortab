@@ -1,0 +1,110 @@
+[
+ {
+  "server": "vanilla",
+  "plan": "shield_sword_only",
+  "rep": 0,
+  "shieldCooldownPkts": [],
+  "kb": null
+ },
+ {
+  "server": "vanilla",
+  "plan": "shield_sword_only",
+  "rep": 1,
+  "shieldCooldownPkts": [],
+  "kb": null
+ },
+ {
+  "server": "vanilla",
+  "plan": "shield_sword_only",
+  "rep": 2,
+  "shieldCooldownPkts": [],
+  "kb": null
+ },
+ {
+  "server": "vanilla",
+  "plan": "shield_sword_only",
+  "rep": 3,
+  "shieldCooldownPkts": [],
+  "kb": null
+ },
+ {
+  "server": "vanilla",
+  "plan": "shield_sword_to_axe_sametick",
+  "rep": 0,
+  "shieldCooldownPkts": [
+   100
+  ],
+  "kb": null
+ },
+ {
+  "server": "vanilla",
+  "plan": "shield_sword_to_axe_sametick",
+  "rep": 1,
+  "shieldCooldownPkts": [
+   100
+  ],
+  "kb": null
+ },
+ {
+  "server": "vanilla",
+  "plan": "shield_sword_to_axe_sametick",
+  "rep": 2,
+  "shieldCooldownPkts": [
+   100
+  ],
+  "kb": null
+ },
+ {
+  "server": "vanilla",
+  "plan": "shield_sword_to_axe_sametick",
+  "rep": 3,
+  "shieldCooldownPkts": [
+   100
+  ],
+  "kb": null
+ },
+ {
+  "server": "vanilla",
+  "plan": "nosprint_flick90",
+  "rep": 0,
+  "shieldCooldownPkts": [],
+  "kb": [
+   0,
+   0.3608,
+   0.4
+  ]
+ },
+ {
+  "server": "vanilla",
+  "plan": "nosprint_flick90",
+  "rep": 1,
+  "shieldCooldownPkts": [],
+  "kb": [
+   0,
+   0.3608,
+   0.4
+  ]
+ },
+ {
+  "server": "vanilla",
+  "plan": "nosprint_flick90",
+  "rep": 2,
+  "shieldCooldownPkts": [],
+  "kb": [
+   0,
+   0.3608,
+   0.4
+  ]
+ },
+ {
+  "server": "vanilla",
+  "plan": "nosprint_flick90",
+  "rep": 3,
+  "shieldCooldownPkts": [],
+  "kb": [
+   0,
+   0.3608,
+   0.4
+  ]
+ }
+]
