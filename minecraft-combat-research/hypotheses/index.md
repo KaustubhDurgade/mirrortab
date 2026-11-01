@@ -28,6 +28,9 @@ Experiments: `experiments/README.md`, raw data `../test-results/`.
 | H21 | Paper `PlayerVelocityEvent` in the attack path reports pre-hit velocity | event ≠ sent | equal | **CONFIRMED** Paper (probe); plugin-only impact |
 | H22 | Slabs/trapdoors/fences change shadow-sim landing ⇒ alter crit window and KB `onGround` branch | different crit ticks near partial blocks | same | SPECULATIVE (not tested) |
 | H23 | Paper `knockback()` without early return halves velocity even at full KB resistance | — | — | SOURCE-SUPPORTED; outside kit |
+| H25 | Triple swap: vanilla mixes sword attributes/charge with the mace smash bonus in one hit | (7+bonus)×1.5 | (6+bonus)×1.5 | **CONFIRMED** vanilla (E9 29.54 vs mace 28.04) |
+| H26 | Paper default reduces the triple swap to an uncharged mace smash; the bonus is unaffected because it is added after cooldown scaling | 6×0.2+bonus, no crit | ~1.2 total | **CONFIRMED** Paper (E9 13.89) |
+| H27 | The spear's reach in the triple swap is client-only (raycast); the server allows ≈6 blocks for any item | server accepts 4.17 for all items | rejects non-spear | server half **CONFIRMED** both (E9); client half SOURCE-SUPPORTED |
 | H24 | Non-sprint ground hits lift 0.3608 not 0.4 because sim resting v0y=−0.0784 | 0.3608 | 0.4 | **CONFIRMED** both (E3/E8) |
 
 ## Top 5 by competitive value (see FINAL_REPORT §F for scoring)

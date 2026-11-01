@@ -1,0 +1,86 @@
+[
+ {
+  "server": "paper",
+  "plan": "mace_only",
+  "rep": 0,
+  "dmg": 28.0388,
+  "eyeToTargetBoxApprox": 4.169
+ },
+ {
+  "server": "paper",
+  "plan": "mace_only",
+  "rep": 1,
+  "dmg": 28.0388,
+  "eyeToTargetBoxApprox": 4.169
+ },
+ {
+  "server": "paper",
+  "plan": "mace_only",
+  "rep": 2,
+  "dmg": 28.0388,
+  "eyeToTargetBoxApprox": 4.169
+ },
+ {
+  "server": "paper",
+  "plan": "sword_only",
+  "rep": 0,
+  "dmg": 10.5,
+  "eyeToTargetBoxApprox": 4.169
+ },
+ {
+  "server": "paper",
+  "plan": "sword_only",
+  "rep": 1,
+  "dmg": 10.5,
+  "eyeToTargetBoxApprox": 4.169
+ },
+ {
+  "server": "paper",
+  "plan": "sword_only",
+  "rep": 2,
+  "dmg": 10.5,
+  "eyeToTargetBoxApprox": 4.169
+ },
+ {
+  "server": "paper",
+  "plan": "sword_to_mace",
+  "rep": 0,
+  "dmg": 13.8936,
+  "eyeToTargetBoxApprox": 4.169
+ },
+ {
+  "server": "paper",
+  "plan": "sword_to_mace",
+  "rep": 1,
+  "dmg": 13.8936,
+  "eyeToTargetBoxApprox": 4.169
+ },
+ {
+  "server": "paper",
+  "plan": "sword_to_mace",
+  "rep": 2,
+  "dmg": 13.8936,
+  "eyeToTargetBoxApprox": 4.169
+ },
+ {
+  "server": "paper",
+  "plan": "triple_sword_spear_mace",
+  "rep": 0,
+  "dmg": 13.8936,
+  "eyeToTargetBoxApprox": 4.169
+ },
+ {
+  "server": "paper",
+  "plan": "triple_sword_spear_mace",
+  "rep": 1,
+  "dmg": 13.8936,
+  "eyeToTargetBoxApprox": 4.169
+ },
+ {
+  "server": "paper",
+  "plan": "triple_sword_spear_mace",
+  "rep": 2,
+  "dmg": 13.8936,
+  "eyeToTargetBoxApprox": 4.169
+ }
+]

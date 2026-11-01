@@ -48,6 +48,7 @@ and untested. Full list: `hypotheses/index.md` (24 hypotheses).
 | E5 web crit | normal 0/5 crit, bunched 5/5 crit (10.5) | both |
 | E5b jump crit window | crit on arc ticks 7–10 only; tick 11 (0.121 above ground, fd 1.13) denied | 3/3 per tick, both |
 | E6 blocked hit | 0 velocity pkts, 0 teleports; server dm (0,0.4,0.15) decaying; onGround false 5 ticks | 6/6, both |
+| E9 triple swap (background) | vanilla sword→(spear)→mace = 29.54 (= (7+12.69)×1.5), Paper 13.89 (uncharged mace + full smash bonus); server accepted 4.17-block hits for every item | 3/3 per cell, both |
 | E8 shield swap | same-tick sword→axe disables shield 4/4 (100 ticks); sword 0/4; non-sprint flick straight 4/4 | both |
 Limitations: localhost (no injected latency/jitter except deliberate bunching); scripted (not simulated) client physics;
 single machine; Diamond-kit armour/enchantments not applied (plain items).
@@ -62,6 +63,11 @@ Scores 0–10: Adv(antage) / Repro / Ease (10 = easy) / Lat(ency robustness) / M
 | Swap behaviour (Paper) | 6 | 10 | 7 | 9 | 9 | 10 | 2 | 10 | 6 | On Paper, same-tick sword→axe still breaks shields (0 charge needed) but deals 1.8; don't expect vanilla swap damage. On vanilla servers: axe-held → sword-key+click = 9 dmg (13.5 crit) and end holding the sword. Check the server's `update-equipment-on-player-actions`. |
 | Web crit = jitter artefact | 4 | 10 | — | 2 | — | 10 | 7 | 10 | 4 | Don't plan crits from inside webs. Webbing an opponent denies their crits and nearly nullifies your KB on them. |
 | Click economy | 5 | 10 | 8 | 9 | 9 | 10 | 1 | 10 | 5 | Each extra click in the 10 i-frame ticks costs charge on both servers (1 extra ⇒ 3.99 instead of 7.0). |
+
+### Triple swapping (out of kit, background)
+Sword = damage + 12.5-tick charge (attributes, vanilla only); spear = reach (client raycast only; the server allows ≈6 blocks for any item);
+mace = smash bonus (item method, read at hit time, added after cooldown scaling). Vanilla: 29.5 at sword cadence, about 2× a mace swung at
+that cadence. Paper default: 13.9 (the sword part is lost; mace bonus and reach survive). Details: `analysis/attribute-swapping.md`.
 
 ## G. Refuted
 H4 Paper free ghost clicks (swing reset); "pre-charged axe" on Paper; H15 sprint desync crits (flag resync, source);

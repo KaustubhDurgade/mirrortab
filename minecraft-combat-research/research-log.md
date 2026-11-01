@@ -24,6 +24,8 @@ All times UTC, 2026-11-01. Work dir for copyrighted/bulky artifacts: `/home/user
 - 02:50 Prior-art search: knockback displacement & Paper swap fix already known; landing-tick crit denial not found.
 - 02:55 Wrote analysis/, hypotheses/, discoveries/, FINAL_REPORT.md.
 
+- (session 2) Container processes had stopped; restarted both servers. E9 triple swap: vanilla 29.54, Paper 13.89, mace-only 28.04, sword-only 10.5; 3/3 each. Spear reach is client-side; server accepts ~6 blocks for any item.
+
 ## Continuation checkpoint
 - Acquired: Mojang 1.21.11 client/server + mappings (verified), Paper 132 jar + source @c5eb079. Decompiled trees in /home/user/mcwork/decomp (NOT persisted — container is ephemeral; rebuild with instrumentation/tools + sources/README.md).
 - Servers: /home/user/mcwork/{paper-run,vanilla-run}; scripts instrumentation/tools/{server,vserver}.sh.

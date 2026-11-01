@@ -1,0 +1,86 @@
+[
+ {
+  "server": "vanilla",
+  "plan": "mace_only",
+  "rep": 0,
+  "dmg": 28.0388,
+  "eyeToTargetBoxApprox": 4.169
+ },
+ {
+  "server": "vanilla",
+  "plan": "mace_only",
+  "rep": 1,
+  "dmg": 28.0388,
+  "eyeToTargetBoxApprox": 4.169
+ },
+ {
+  "server": "vanilla",
+  "plan": "mace_only",
+  "rep": 2,
+  "dmg": 28.0388,
+  "eyeToTargetBoxApprox": 4.169
+ },
+ {
+  "server": "vanilla",
+  "plan": "sword_only",
+  "rep": 0,
+  "dmg": 10.5,
+  "eyeToTargetBoxApprox": 4.169
+ },
+ {
+  "server": "vanilla",
+  "plan": "sword_only",
+  "rep": 1,
+  "dmg": 10.5,
+  "eyeToTargetBoxApprox": 4.169
+ },
+ {
+  "server": "vanilla",
+  "plan": "sword_only",
+  "rep": 2,
+  "dmg": 10.5,
+  "eyeToTargetBoxApprox": 4.169
+ },
+ {
+  "server": "vanilla",
+  "plan": "sword_to_mace",
+  "rep": 0,
+  "dmg": 29.5388,
+  "eyeToTargetBoxApprox": 4.169
+ },
+ {
+  "server": "vanilla",
+  "plan": "sword_to_mace",
+  "rep": 1,
+  "dmg": 29.5388,
+  "eyeToTargetBoxApprox": 4.169
+ },
+ {
+  "server": "vanilla",
+  "plan": "sword_to_mace",
+  "rep": 2,
+  "dmg": 29.5388,
+  "eyeToTargetBoxApprox": 4.169
+ },
+ {
+  "server": "vanilla",
+  "plan": "triple_sword_spear_mace",
+  "rep": 0,
+  "dmg": 29.5388,
+  "eyeToTargetBoxApprox": 4.169
+ },
+ {
+  "server": "vanilla",
+  "plan": "triple_sword_spear_mace",
+  "rep": 1,
+  "dmg": 29.5388,
+  "eyeToTargetBoxApprox": 4.169
+ },
+ {
+  "server": "vanilla",
+  "plan": "triple_sword_spear_mace",
+  "rep": 2,
+  "dmg": 29.5388,
+  "eyeToTargetBoxApprox": 4.169
+ }
+]

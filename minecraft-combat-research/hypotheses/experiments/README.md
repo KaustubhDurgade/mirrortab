@@ -16,6 +16,7 @@ real one) to neutralise CraftBukkit `justTeleported` (H18). Target max health 10
 | E5 | e5_web_crit.js | crit from inside a cobweb, normal vs bunched ticks | 15 + 15 | E5_web_crit_*.json |
 | E5b | e5b_jump_crit_window.js | crit per tick of a standing jump arc | 33 + 33 | E5b_jump_crit_window_*.json |
 | E6 | e6_blocked_kb.js | what a shield-blocked hit does to the defender | 6 + 6 | E6_blocked_kb_*.json |
+| E9 | e9_triple_swap.js | triple swap sword→spear→mace vs double/single, 5-block fall, ~4.2-block reach | 12 + 12 | E9_triple_swap_*.json |
 | E8 | e8_shield_swap.js | shield disable via same-tick swap (spaced 5.6 s); non-sprint flick | 12 + 12 | E8_shield_swap_*.json |
 
 Baselines: every plan has an un-manipulated baseline (aim-held, no swap, no web, sword-only, normal spacing).
