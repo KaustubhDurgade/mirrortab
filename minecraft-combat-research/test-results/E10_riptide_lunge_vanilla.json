@@ -1,0 +1,80 @@
+[
+ {
+  "server": "vanilla",
+  "mode": "control_look_up",
+  "rep": 0,
+  "velocityPacketsAfterStab": [
+   [
+    55,
+    0,
+    0.338,
+    1.374
+   ]
+  ]
+ },
+ {
+  "server": "vanilla",
+  "mode": "control_look_up",
+  "rep": 1,
+  "velocityPacketsAfterStab": [
+   [
+    117,
+    0,
+    0.338,
+    1.374
+   ]
+  ]
+ },
+ {
+  "server": "vanilla",
+  "mode": "control_look_up",
+  "rep": 2,
+  "velocityPacketsAfterStab": [
+   [
+    179,
+    0,
+    0.338,
+    1.374
+   ]
+  ]
+ },
+ {
+  "server": "vanilla",
+  "mode": "flick_down_to_up",
+  "rep": 0,
+  "velocityPacketsAfterStab": [
+   [
+    242,
+    0,
+    -3.357,
+    1.374
+   ]
+  ]
+ },
+ {
+  "server": "vanilla",
+  "mode": "flick_down_to_up",
+  "rep": 1,
+  "velocityPacketsAfterStab": [
+   [
+    303,
+    0,
+    -3.357,
+    1.374
+   ]
+  ]
+ },
+ {
+  "server": "vanilla",
+  "mode": "flick_down_to_up",
+  "rep": 2,
+  "velocityPacketsAfterStab": [
+   [
+    365,
+    0,
+    -3.357,
+    1.374
+   ]
+  ]
+ }
+]

@@ -26,6 +26,8 @@ All times UTC, 2026-11-01. Work dir for copyrighted/bulky artifacts: `/home/user
 
 - (session 2) Container processes had stopped; restarted both servers. E9 triple swap: vanilla 29.54, Paper 13.89, mace-only 28.04, sword-only 10.5; 3/3 each. Spear reach is client-side; server accepts ~6 blocks for any item.
 
+- (session 3) E10 riptide→lunge: server riptide uses previous-tick pitch (push −3 on flick); lunge syncs stored server velocity → client (0,−3.357,1.374) vs control (0,+0.338,1.374). Both servers 3/3. First run contaminated by E9 pillar; fixed. Probe gained a PlayerRiptideEvent logger.
+
 ## Continuation checkpoint
 - Acquired: Mojang 1.21.11 client/server + mappings (verified), Paper 132 jar + source @c5eb079. Decompiled trees in /home/user/mcwork/decomp (NOT persisted — container is ephemeral; rebuild with instrumentation/tools + sources/README.md).
 - Servers: /home/user/mcwork/{paper-run,vanilla-run}; scripts instrumentation/tools/{server,vserver}.sh.

@@ -143,6 +143,12 @@ public class CombatProbe extends JavaPlugin implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onJump(PlayerJumpEvent e) { emit("serverJump", state("p", nms(e.getPlayer()))); }
     @EventHandler(priority = EventPriority.MONITOR)
+    public void onRiptide(org.bukkit.event.player.PlayerRiptideEvent e) {
+        emit("riptide", state("p", nms(e.getPlayer())) + String.format(Locale.ROOT, ",\"push\":[%.6f,%.6f,%.6f]", e.getVelocity().getX(), e.getVelocity().getY(), e.getVelocity().getZ()));
+        ServerPlayer sp = nms(e.getPlayer());
+        Bukkit.getScheduler().runTask(this, () -> emit("riptideNextTask", state("p", sp)));
+    }
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onJoin(PlayerJoinEvent e) { tap(e.getPlayer()); }
 
     // ---------- read-only inbound packet tap ----------

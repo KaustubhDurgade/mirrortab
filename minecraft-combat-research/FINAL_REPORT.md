@@ -69,6 +69,11 @@ Sword = damage + 12.5-tick charge (attributes, vanilla only); spear = reach (cli
 mace = smash bonus (item method, read at hit time, added after cooldown scaling). Vanilla: 29.5 at sword cadence, about 2× a mace swung at
 that cadence. Paper default: 13.9 (the sword part is lost; mace bonus and reach survive). Details: `analysis/attribute-swapping.md`.
 
+### Downward lunge after riptide (out of kit, background) — explained
+Flick down→up in the riptide release window: the client flies up while the server stores a −3 riptide velocity (previous-tick pitch).
+Lunge adds a horizontal impulse server-side and sends the server's full velocity, so the client receives (lunge, −3.36) and slams
+down. Both servers, 3/3; control +0.34. Details: `analysis/riptide-lunge-downward.md`.
+
 ## G. Refuted
 H4 Paper free ghost clicks (swing reset); "pre-charged axe" on Paper; H15 sprint desync crits (flag resync, source);
 blocked-hit rubber-band; my initial "server doesn't simulate player velocity" reading. Details: `discoveries/refuted.md`.

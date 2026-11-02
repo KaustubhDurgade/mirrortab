@@ -31,6 +31,8 @@ Experiments: `experiments/README.md`, raw data `../test-results/`.
 | H25 | Triple swap: vanilla mixes sword attributes/charge with the mace smash bonus in one hit | (7+bonus)×1.5 | (6+bonus)×1.5 | **CONFIRMED** vanilla (E9 29.54 vs mace 28.04) |
 | H26 | Paper default reduces the triple swap to an uncharged mace smash; the bonus is unaffected because it is added after cooldown scaling | 6×0.2+bonus, no crit | ~1.2 total | **CONFIRMED** Paper (E9 13.89) |
 | H27 | The spear's reach in the triple swap is client-only (raycast); the server allows ≈6 blocks for any item | server accepts 4.17 for all items | rejects non-spear | server half **CONFIRMED** both (E9); client half SOURCE-SUPPORTED |
+| H28 | Riptide is applied server-side with the previous-tick pitch ⇒ a flick+release stores a velocity opposite to the client's flight | probe push −3 vs client up | +3 | **CONFIRMED** both (E10) |
+| H29 | Lunge (horizontal impulse + hurtMarked) syncs the server's whole stored velocity to the client ⇒ "downward lunge" | client receives y −3.36 | y ≥ 0 | **CONFIRMED** both (E10 3/3; control +0.34) |
 | H24 | Non-sprint ground hits lift 0.3608 not 0.4 because sim resting v0y=−0.0784 | 0.3608 | 0.4 | **CONFIRMED** both (E3/E8) |
 
 ## Top 5 by competitive value (see FINAL_REPORT §F for scoring)
